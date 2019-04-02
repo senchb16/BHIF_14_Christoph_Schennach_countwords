@@ -24,29 +24,7 @@ public class Book {
     }
     
     public HashMap<String, Integer> countWords(){
-        String[] parts = text.split(" ");
-        for (String part : parts) {
-            if(!map.containsKey(part)){
-                map.put(part,1);
-            }
-            else{
-                int count = map.get(part);
-                count++;
-                map.put(part, count);
-            }
-            
-        }
-        
-        LinkedList<String> keys = new LinkedList<String>();
-        for (String key : map.keySet()) {
-            if(map.get(key) < 2){
-                keys.add(key);
-            }
-        }
-        for(String key : keys){
-            map.remove(key);
-        }
-        
+       //implement counting
         return map;
     }
     
