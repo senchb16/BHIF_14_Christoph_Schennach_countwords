@@ -6,7 +6,7 @@
 package producer;
 
 import book.Book;
-import gui.Zustand;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -25,16 +25,15 @@ import queue.MyQueue;
 public class CountProducer extends Thread {
 
     private final MyQueue<Book> bookQueue;
-    private final Zustand zustand;
 
-    public CountProducer(MyQueue bookQueue, Zustand zustand) {
+    public CountProducer(MyQueue bookQueue) {
         this.bookQueue = bookQueue;
-        this.zustand = zustand;
+
     }
 
     @Override
     public void run() {
-        zustand.setToExecute();
+
         File[] files = new File("src/files/").listFiles();
         for (File file : files) {
             try {
@@ -50,9 +49,9 @@ public class CountProducer extends Thread {
                         bookQueue.put(book);
                         bookQueue.notifyAll();
                     } catch (FullException ex) {
-                        zustand.setToWait();
+
                         bookQueue.wait();
-                        zustand.setToExecute();
+
                     }
                 }
             } catch (Exception ex) {

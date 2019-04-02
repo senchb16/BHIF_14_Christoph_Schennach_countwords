@@ -6,7 +6,7 @@
 package consumer;
 
 import book.Book;
-import gui.Zustand;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -25,16 +25,16 @@ public class CountConsumer extends Thread {
 
     private final MyQueue<Book> bookQueue;
     private HashMap<String, Integer> map = new HashMap<>();
-    private final Zustand zustand;
+   
 
-    public CountConsumer(MyQueue<Book> bookQueue, Zustand zustand) {
+    public CountConsumer(MyQueue<Book> bookQueue) {
         this.bookQueue = bookQueue;
-        this.zustand = zustand;
+        
     }
 
     @Override
     public void run() {
-        zustand.setToExecute();
+        
         Book book = null;
         while (true) {
             synchronized (bookQueue) {
@@ -43,9 +43,9 @@ public class CountConsumer extends Thread {
                     bookQueue.notifyAll();
                 } catch (EmptyException ex) {
                     try {
-                        zustand.setToWait();
+                       
                         bookQueue.wait();
-                        zustand.setToExecute();
+                      
                     } catch (InterruptedException ex1) {
                         Logger.getLogger(CountConsumer.class.getName()).log(Level.SEVERE, null, ex1);
                     }

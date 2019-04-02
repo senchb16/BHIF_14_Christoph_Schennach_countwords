@@ -6,6 +6,7 @@
 package book;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 
@@ -24,7 +25,46 @@ public class Book {
     }
     
     public HashMap<String, Integer> countWords(){
-       //implement counting
+        String[] parts = text.split(" ");
+        for (String part : parts) {
+            part = part.replace(".","");
+            part = part.replace("/","");
+            part = part.replace("\\","");
+            part = part.replace(":","");
+            part = part.replace(",","");
+            part = part.replace(";","");
+            part = part.replace("(","");
+            part = part.replace(")","");
+            part = part.replace("[","");
+            part = part.replace("]","");
+            part = part.replace("-","");
+            part = part.replace("_","");
+            part = part.replace("@","");
+            part = part.replace("\"","");
+            part = part.replace("!","");
+            part = part.replace("?","");
+            
+            if(!map.containsKey(part)){
+                map.put(part,1);
+            }
+            else{
+                int count = map.get(part);
+                count++;
+                map.put(part, count);
+            }
+            
+        }
+        
+        ArrayList<String> keys = new ArrayList<String>();
+        for (String key : map.keySet()) {
+            if(map.get(key) < 2){
+                keys.add(key);
+            }
+        }
+        for(String key : keys){
+            map.remove(key);
+        }
+        
         return map;
     }
     
